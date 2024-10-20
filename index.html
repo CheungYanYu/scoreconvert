@@ -1,0 +1,328 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CUHK CHLL DSE Score Calculator</title>
+    <style>
+        body {
+            font-family: Times New Romanl, serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #69246b;
+            border: 1px solid #69246b;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #dda52d;
+            margin-bottom: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #dda52d;
+        }
+        input[type="number"] {
+            width: 100%;
+            height: 40px;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #69246b;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+        }
+        button {
+            width: 100%;
+            height: 40px;
+            padding: 10px;
+            background-color: #dda52d;
+            color: #69246b;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #dda52d;
+            opacity: 0.8;
+        }
+        #results {
+            margin-top: 20px;
+        }
+        #results p {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border: 1px solid #69246b;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            color: #69246b;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #dda52d;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #69246b;
+            color: #dda52d;
+        }
+        .result-background {
+            background-color: #ffffff;
+            padding: 10px;
+            border: 1px solid #69246b;
+            border-radius: 5px;
+            color: #69246b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your CUHK CHLL DSE Score Calculator</h1>
+        <h2>Weighted to Raw Possibilities Combination Finder</h2>
+        <p style="color: #dda52d">The 8.5 score conversion system is applied as follows: scores of 5** are converted to 8.5, 5* to 7, and 5 to 5.5. When displaying possible raw scores, the first score shown is for Chinese Language, which carries a special weighting of 1.2 times its original value. The remaining scores are then listed in descending order.</p>
+        <label for="targetScore">Please input the weighted score:</label>
+        <input type="number" id="targetScore" step="0.1">
+        <button onclick="findCombinations()">Find Combinations</button>
+        <div id="results"></div>
+
+
+        <h2 style="margin-top: 40px;">Raw Score to Weighted Score Converter</h2>
+        <form>
+            <table>
+                <tr>
+                    <th>Subject</th>
+                    <th>Grade</th>
+                </tr>
+                <tr>
+                    <td style="color: #dda52d">Chinese Language</td>
+                    <td>
+                        <select id="chinese-grade">
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="5*">5*</option>
+                            <option value="5**">5**</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="color: #dda52d">English Language</td>
+                    <td>
+                        <select id="english-grade">
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="5*">5*</option>
+                            <option value="5**">5**</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="color: #dda52d">Maths</td>
+                    <td>
+                        <select id="maths-grade">
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="5*">5*</option>
+                            <option value="5**">5**</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="color: #dda52d">Elective One</td>
+                    <td>
+                        <select id="elective-one-grade">
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="5*">5*</option>
+                            <option value="5**">5**</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="color: #dda52d">Elective Two</td>
+                    <td>
+                        <select id="elective-two-grade">
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="5*">5*</option>
+                            <option value="5**">5**</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="color: #dda52d">Elective Three</td>
+                    <td>
+                        <select id="elective-three-grade">
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="5*">5*</option>
+                            <option value="5**">5**</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <button type="button" onclick="calculateWeightedScore()">Calculate Weighted Score</button>
+        </form>
+        <div class="result-background" style="margin-top: 20px;">
+            <p id="result"></p>
+            <p id="quartile-result"></p>
+        </div>
+    </div>
+
+
+    <script>
+function findCombinations() {
+    var psb_grade = [8.5, 7, 5.5, 4, 3];
+    var grade_map = {
+        8.5: "5**",
+        7: "5*",
+        5.5: "5",
+        4: "4",
+        3: "3"
+    };
+    var raw_score_map = {
+        "5**": 7,
+        "5*": 6,
+        "5": 5,
+        "4": 4,
+        "3": 3
+    };
+    var targetScoreInput = document.getElementById('targetScore').value;
+    var target_score = parseFloat(targetScoreInput);
+    if (isNaN(target_score)) {
+        alert("Please enter a valid number for the target score.");
+        return;
+    }
+    var valid_combinations = {};
+    var count = 0; // Keep track of the number of combinations found
+    for (var i = 0; i < psb_grade.length; i++) {
+        var a = psb_grade[i];
+        for (var j = 0; j < psb_grade.length; j++) {
+            var b = psb_grade[j];
+            for (var k = 0; k < psb_grade.length; k++) {
+                var c = psb_grade[k];
+                for (var l = 0; l < psb_grade.length; l++) {
+                    var d = psb_grade[l];
+                    for (var m = 0; m < psb_grade.length; m++) {
+                        var e = psb_grade[m];
+                        var total_score = 1.2 * a + b + c + d + e;
+                        // To handle floating point precision issues
+                        if (Math.abs(total_score - target_score) < 1e-6) {
+                            // Sort [b, c, d, e] in descending order
+                            var rest = [b, c, d, e];
+                            rest.sort(function(x, y) { return y - x; });
+                            var combination = [a].concat(rest);
+                            var key = combination.toString();
+                            if (!valid_combinations.hasOwnProperty(key)) {
+                                valid_combinations[key] = combination;
+                                count++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    var resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = "";
+    if (count === 0) {
+        resultsDiv.innerHTML = "<p>No valid combinations found.</p>";
+    } else {
+        var j = 1;
+        for (var key in valid_combinations) {
+            var combo = valid_combinations[key];
+            var new_combo = combo.map(function(grade) {
+                return grade_map[grade];
+            });
+            var sum_raw_score = new_combo.reduce(function(acc, grade) {
+                return acc + raw_score_map[grade];
+            }, 0);
+            var p = document.createElement('p');
+            p.textContent = "Combination " + j + ": " + new_combo.join(", ") + " (Sum of raw score: " + sum_raw_score + ")";
+            resultsDiv.appendChild(p);
+            j++;
+        }
+    }
+}
+
+
+function calculateWeightedScore() {
+    const grades = {
+        "3": 3,
+        "4": 4,
+        "5": 5.5,
+        "5*": 7,
+        "5**": 8.5
+    };
+
+
+    const chineseGrade = grades[document.getElementById("chinese-grade").value];
+    const englishGrade = grades[document.getElementById("english-grade").value];
+    const mathsGrade = grades[document.getElementById("maths-grade").value];
+    const electiveOneGrade = grades[document.getElementById("elective-one-grade").value];
+    const electiveTwoGrade = grades[document.getElementById("elective-two-grade").value];
+    const electiveThreeGrade = grades[document.getElementById("elective-three-grade").value];
+
+
+    const scores = [
+        { subject: "Chinese", score: chineseGrade * 1.2 },
+        { subject: "English", score: englishGrade },
+        { subject: "Maths", score: mathsGrade },
+        { subject: "Elective 1", score: electiveOneGrade },
+        { subject: "Elective 2", score: electiveTwoGrade },
+        { subject: "Elective 3", score: electiveThreeGrade }
+    ];
+
+
+    scores.sort((a, b) => b.score - a.score);
+
+
+    const bestFiveScore = scores.slice(0, 5).reduce((a, b) => a + b.score, 0);
+
+
+    document.getElementById("result").innerHTML = `Your weighted score is: ${bestFiveScore}`;
+
+
+    const lowerQuartile = 28.2;
+    const median = 29;
+    const upperQuartile = 30.7;
+
+
+    if (bestFiveScore < lowerQuartile) {
+        document.getElementById("quartile-result").innerHTML = "While you haven't reached the lower quartile (28.2)  just yet, keep up the great effort and stay determined!";
+    } else if (bestFiveScore < median) {
+        document.getElementById("quartile-result").innerHTML = "Congratulations! You've successfully reached the lower quartile (28.2) , a great milestone in your progress! Keep up the fantastic work and strive for even greater achievements!";
+    } else if (bestFiveScore < upperQuartile) {
+        document.getElementById("quartile-result").innerHTML = "Excellent! You've achieved the median (29.2) , a significant accomplishment that shows you're right on track!!";
+    } else {
+        document.getElementById("quartile-result").innerHTML = "Outstanding achievement! You've made it to the upper quartile (30.7) ! Keep striving for excellence and reaching for the top!";
+    }
+
+
+    const scoreDetails = scores.map((score, index) => {
+        return `<p>Subject ${index + 1}: ${score.subject} - Weighted Score: ${score.score}</p>`;
+    }).join('');
+
+
+    document.getElementById("score-breakdown").innerHTML = `
+        <h2>Score Breakdown:</h2>
+        ${scoreDetails}
+        <p><strong>Total Weighted Score:</strong> ${bestFiveScore}</p>
+    `;
+}
+    </script>
+</body>
+</html>
