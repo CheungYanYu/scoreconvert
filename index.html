@@ -129,6 +129,7 @@
                     <td style="color: #dda52d">Maths</td>
                     <td>
                         <select id="maths-grade">
+                            <option value="2">2</option>
                             <option value="3">3</option>
                             <option value="4">4</option>
                             <option value="5">5</option>
@@ -165,6 +166,8 @@
                     <td style="color: #dda52d">Elective Three</td>
                     <td>
                         <select id="elective-three-grade">
+                            <option value="0">N/A</option>
+                            <option value="2">2</option>
                             <option value="3">3</option>
                             <option value="4">4</option>
                             <option value="5">5</option>
@@ -261,6 +264,8 @@ function findCombinations() {
 
 function calculateWeightedScore() {
     const grades = {
+        "0": 0,
+        "2": 2,
         "3": 3,
         "4": 4,
         "5": 5.5,
